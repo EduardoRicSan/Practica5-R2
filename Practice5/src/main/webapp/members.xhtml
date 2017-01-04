@@ -1,0 +1,74 @@
+!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head></h:head> 
+<body> 
+	<h1>Member</h1>
+	
+	<h:form id="frmMember">
+		Contact Info:<h:inputText value="#{memberController.member.contactInfo}" />
+		address:<h:inputText value="#{memberController.member.address}" />
+		lastName:<h:inputText value="#{memberController.member.lastName}" />
+		firstName:<h:inputText value="#{memberController.member.firstName}" />
+		gender:<h:inputText value="#{memberController.member.gender}" />
+		birthdate:<h:inputText value="#{memberController.member.birthdate}" />
+	<h:commandButton action="#{memberController.save}" value="Save" >
+		<f:ajax execute="frmMember" render="frmMember"/>
+		</h:commandButton>
+		
+		<h:commandButton rendered="#{memberController.editMode}"
+		 action="#{memberController.save}" value="Cancel" >
+			<f:ajax render="frmMember"></f:ajax>
+		</h:commandButton>
+		
+	<h:dataTable value="#{memberController.members}" var="c" id="dtMember">
+		<h:column>
+			<f:facet name="header">ID</f:facet>
+			#{c.id}
+		</h:column>
+		<h:column>
+			<f:facet name="header">Contact Info</f:facet>
+			#{c.contactInfo}
+		</h:column>
+		<h:column>
+			<f:facet name="header">Address</f:facet>
+			#{c.address}
+		</h:column>
+		<h:column>
+			<f:facet name="header">lastName</f:facet>
+			#{c.lastName}
+		</h:column>
+		<h:column>
+			<f:facet name="header">firstName</f:facet>
+			#{c.firstName}
+		</h:column>
+		<h:column>
+			<f:facet name="header">gender</f:facet>
+			#{c.gender}
+		</h:column>
+		<h:column>
+			<f:facet name="header">birthdate</f:facet>
+			#{c.questionDef}
+		</h:column>
+		<h:column>
+			<f:facet name="header">Actions</f:facet>
+			<h:commandButton 
+			action="#{memberController.delete(c)}"
+			 value="Delete" 
+			 onclick="return window.confirm('Are you sure?')">
+			 <f:ajax render="frmMember:dtMember"/>
+			 </h:commandButton>
+			 <h:commandButton action="#{memberController.update(c)}" value="Update">
+			 	<f:ajax render="frmMember"/>
+			 </h:commandButton>
+		</h:column>
+	</h:dataTable>
+</h:form>
+	
+</body>  
+</html>
+
+

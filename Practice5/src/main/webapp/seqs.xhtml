@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head></h:head> 
+<body> 
+	<h1>Seq</h1>
+	
+	<h:form id="frmSeq">
+		Display:<h:inputText value="#{seqController.seq.display}" />
+		Description:<h:inputText value="#{seqController.seq.description}" />
+		seq:<h:inputText value="#{seqController.seq.seq}" />
+		Seq Len:<h:inputText value="#{seqController.seq.seqLen}" />
+		checkeum:<h:inputText value="#{seqController.seq.checkeum}" />
+		molType:<h:inputText value="#{seqController.seq.molType}" />
+		Time Stamp:<h:inputText value="#{seqController.seq.timeStamp}" />
+		
+	<h:commandButton action="#{seqController.save}" value="Save" >
+		<f:ajax execute="frmSeq" render="frmSeq"/>
+		</h:commandButton>
+		
+		<h:commandButton rendered="#{seqController.editMode}"
+		 action="#{seqController.save}" value="Cancel" >
+			<f:ajax render="frmSeq"></f:ajax>
+		</h:commandButton>
+		
+	<h:dataTable value="#{seqController.seqs}" var="c" id="dtSeq">
+		<h:column>
+			<f:facet name="header">ID</f:facet>
+			#{c.id}
+		</h:column>
+		<h:column>
+			<f:facet name="header">Display</f:facet>
+			#{c.display}
+		</h:column>
+		<h:column>
+			<f:facet name="header">Description</f:facet>
+			#{c.description}
+		</h:column>
+		<h:column>
+			<f:facet name="header">Seq</f:facet>
+			#{c.seq}
+		</h:column>
+		<h:column>
+			<f:facet name="header">Seq Len</f:facet>
+			#{c.seqLen}
+		</h:column>
+		<h:column>
+			<f:facet name="header">checkeum</f:facet>
+			#{c.checkeum}
+		</h:column>
+		<h:column>
+			<f:facet name="header">molType</f:facet>
+			#{c.molType}
+		</h:column>
+		<h:column>
+			<f:facet name="header">Time Stamp</f:facet>
+			#{c.timeStamp}
+		</h:column>
+		
+		<h:column>
+			<f:facet name="header">Actions</f:facet>
+			<h:commandButton 
+			action="#{seqController.delete(c)}"
+			 value="Delete" 
+			 onclick="return window.confirm('Are you sure?')">
+			 <f:ajax render="frmSeq:dtSeq"/>
+			 </h:commandButton>
+			 <h:commandButton action="#{seqController.update(c)}" value="Update">
+			 	<f:ajax render="frmSeq"/>
+			 </h:commandButton>
+		</h:column>
+	</h:dataTable>
+</h:form>
+	
+</body>  
+</html>
+
+
